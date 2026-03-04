@@ -90,9 +90,6 @@ export async function updateInvoice(id: string, formData: FormData) {
   `;
   } catch (error) {
     console.log("%c Line:61 🍪 error", "color:#6ec1c2", error);
-    return {
-      message: "Database Error: Failed to Create Invoice",
-    };
   }
 
   revalidatePath("/dashboard/invoices");
