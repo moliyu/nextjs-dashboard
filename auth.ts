@@ -10,7 +10,7 @@ const sql = postgres(process.env.POSTGRES_URL!, { ssl: "require" });
 
 async function getUser(email: string): Promise<User | undefined> {
   try {
-    const user = await sql<User[]>`SELECT * FROM users WHERE emial = ${email}`;
+    const user = await sql<User[]>`SELECT * FROM users WHERE email = ${email}`;
     return user[0];
   } catch (error) {
     console.log("%c Line:15 🌶 error", "color:#ffdd4d", error);
@@ -26,7 +26,7 @@ export const { auth, signIn, signOut } = NextAuth({
         const parsedCredentials = z
           .object({
             email: z.string().email(),
-            password: z.string().min(8),
+            password: z.string().min(6),
           })
           .safeParse(credentials);
 
@@ -39,7 +39,6 @@ export const { auth, signIn, signOut } = NextAuth({
           if (passwordsMatch) return user;
         }
 
-        console.log("Invalid credentials");
         return null;
       },
     }),
